@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tujupäevik · praktikum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF6EF;
+    --card:#FFFFFF;
+    --ink:#1C1917;
+    --muted:#6E6558;
+    --red:#D93B1F;
+    --red-soft:#FBEBE6;
+    --border:#E6DECF;
+    --mono-bg:#211D1A;
+    --mono-fg:#F2EDE4;
+    --ok:#2E7D5B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.55;
+    padding:22px 18px 60px;
+    max-width:640px;
+    margin:0 auto;
+    font-size:16px;
+  }
+  .eyebrow{
+    font-size:12px;font-weight:700;letter-spacing:.22em;
+    color:var(--red);text-transform:uppercase;margin-bottom:8px;
+  }
+  h1{
+    font-family:'Source Serif 4',serif;font-weight:700;
+    font-size:clamp(30px,8vw,40px);line-height:1.12;margin-bottom:10px;
+  }
+  .meta{
+    display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px;
+  }
+  .meta span{
+    font-size:12.5px;font-weight:600;color:var(--muted);
+    border:1px solid var(--border);border-radius:999px;
+    padding:4px 12px;background:var(--card);
+  }
+  .lead{color:var(--muted);font-size:15px;margin-top:10px}
+
+  .rule{
+    margin:26px 0;background:var(--red-soft);
+    border:1.5px solid var(--red);border-radius:12px;padding:16px 18px;
+  }
+  .rule strong{color:var(--red);display:block;font-size:13px;
+    letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+  .rule p{font-size:15.5px}
+
+  .setup{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:18px;margin-bottom:34px;
+  }
+  .setup h2{font-family:'Source Serif 4',serif;font-size:19px;margin-bottom:12px}
+  .setup ol{padding-left:22px}
+  .setup li{margin-bottom:9px;font-size:15px}
+  .setup li::marker{color:var(--red);font-weight:700}
+  .setup a{color:var(--red);font-weight:600;text-decoration-thickness:1.5px}
+
+  .ex{margin-bottom:40px}
+  .ex-head{display:flex;align-items:baseline;gap:14px;margin-bottom:4px}
+  .ex-num{
+    font-family:'Source Serif 4',serif;font-weight:700;
+    font-size:44px;line-height:1;color:var(--red);
+  }
+  .ex-title{font-family:'Source Serif 4',serif;font-weight:700;
+    font-size:22px;line-height:1.2}
+  .ex-time{font-size:12.5px;font-weight:600;color:var(--muted);
+    letter-spacing:.08em;margin-bottom:12px;padding-left:58px}
+  .ex-body{font-size:15px;margin-bottom:12px}
+  .ex-body p{margin-bottom:10px}
+
+  .prompt{
+    background:var(--mono-bg);border-radius:14px;
+    padding:16px 16px 12px;margin:12px 0;
+    position:relative;
+  }
+  .prompt-label{
+    font-size:10.5px;font-weight:700;letter-spacing:.18em;
+    color:#A89E90;text-transform:uppercase;margin-bottom:8px;
+  }
+  .prompt pre{
+    font-family:'JetBrains Mono',monospace;font-size:14.5px;
+    color:var(--mono-fg);white-space:pre-wrap;word-break:break-word;
+    line-height:1.5;margin-bottom:12px;
+  }
+  .copy{
+    font-family:'Inter',sans-serif;font-size:13px;font-weight:600;
+    background:var(--red);color:#fff;border:none;border-radius:8px;
+    padding:9px 16px;cursor:pointer;width:100%;
+  }
+  .copy:active{transform:scale(.98)}
+  .copy.done{background:var(--ok)}
+
+  .notice{
+    border-left:3px solid var(--red);background:var(--card);
+    border-radius:0 10px 10px 0;padding:12px 14px;margin:14px 0;
+    font-size:14.5px;
+  }
+  .notice b{color:var(--red);font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;display:block;margin-bottom:4px}
+
+  .quest{
+    background:transparent;border:1.5px dashed var(--border);
+    border-radius:10px;padding:12px 14px;margin-top:12px;font-size:14.5px;
+  }
+  .quest b{display:block;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+
+  .final{
+    background:var(--ink);color:var(--cream);border-radius:14px;
+    padding:22px 20px;margin-top:8px;
+  }
+  .final h2{font-family:'Source Serif 4',serif;font-size:21px;margin-bottom:14px}
+  .final table{width:100%;border-collapse:collapse;font-size:14.5px}
+  .final td{padding:9px 4px;border-top:1px solid #3A342E;vertical-align:top}
+  .final td:first-child{font-weight:600;width:46%}
+  .final td:last-child{color:#CFC6B8}
+  .final .verdict-ok{color:#7FD4AC;font-weight:600}
+  .final .verdict-check{color:#F0B860;font-weight:600}
+  .final .verdict-no{color:#F08C77;font-weight:600}
+  .final p.close{
+    font-family:'Source Serif 4',serif;font-size:17px;line-height:1.45;
+    margin-top:16px;padding-top:14px;border-top:1px solid #3A342E;
+  }
+
+  footer{
+    margin-top:34px;font-size:12.5px;color:var(--muted);
+    text-align:center;letter-spacing:.04em;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<div class="eyebrow">Vibe coding · praktikum</div>
+<h1>Ehita noorele tujupäevik, mis vastab</h1>
+<div class="meta">
+  <span>≈ 30 minutit</span>
+  <span>telefonist</span>
+  <span>Google AI Studio</span>
+  <span>koodioskust ei eelda</span>
+</div>
+<p class="lead">Neli harjutust, mis näitavad, mida keelemudel sinu eest teha suudab — ja mis jääb ka edaspidi sinu otsustada.</p>
+
+<div class="rule">
+  <strong>Üks reegel enne alustamist</strong>
+  <p>Ühtegi päris inimese päevikut, nime ega lugu siia ei sisestata — ka mitte enda oma. Kasuta ainult väljamõeldud sissekandeid, mis on töövihikus ette antud.</p>
+</div>
+
+<div class="setup">
+  <h2>Enne alustamist</h2>
+  <ol>
+    <li>Ava telefonis <a href="https://aistudio.google.com" target="_blank" rel="noopener">aistudio.google.com</a> ja logi sisse Google'i kontoga.</li>
+    <li>Vali <b>Build</b>.</li>
+    <li>Kopeeri esimene soov siit töövihikust ja kleebi sinna.</li>
+  </ol>
+</div>
+
+<!-- 1 -->
+<section class="ex">
+  <div class="ex-head"><div class="ex-num">1</div><div class="ex-title">Esimene rakendus</div></div>
+  <div class="ex-time">≈ 8 MIN</div>
+  <div class="ex-body">
+    <p>Kirjuta üks lause tavalises eesti keeles. Ei mingit koodi, ei mingit erisõnavara.</p>
+  </div>
+  <div class="prompt">
+    <div class="prompt-label">Kopeeri ja kleebi</div>
+    <pre>Tee rakendus, kuhu noor saab igal õhtul kirjutada lühikese päevikusissekande ja märkida oma tuju skaalal 1–5. Näita tujude nädalagraafikut.</pre>
+    <button class="copy" onclick="cp(this)">Kopeeri soov</button>
+  </div>
+  <div class="ex-body"><p>Oota, kuni mudel ehitab, ava tulemus ja sisesta paar väljamõeldud sissekannet:</p></div>
+  <div class="prompt">
+    <div class="prompt-label">Väljamõeldud sissekanded</div>
+    <pre>Matemaatika kontrolltöö läks hästi, pärast käisime sõpradega väljas. Tuju 4.
+Magasin halvasti, terve päev oli udune. Tuju 2.
+Tavaline päev, midagi erilist ei juhtunud. Tuju 3.</pre>
+    <button class="copy" onclick="cp(this)">Kopeeri sissekanded</button>
+  </div>
+  <div class="notice"><b>Pane tähele</b>
+    Sa ei kirjutanud ühtegi koodirida — ja sul on töötav rakendus. Barjäär, mis eraldas idee teostusest, on suuresti kadunud.</div>
+  <div class="quest"><b>Küsimus</b>
+    Kas rakendus tuli täpselt selline, nagu sa ette kujutasid? Kui ei — mida sa oleksid pidanud soovis täpsemalt ütlema?</div>
+</section>
+
+<!-- 2 -->
+<section class="ex">
+  <div class="ex-head"><div class="ex-num">2</div><div class="ex-title">Muudatus tavakeeles</div></div>
+  <div class="ex-time">≈ 7 MIN</div>
+  <div class="ex-body">
+    <p>Rakenduse muutmine on vestlus, mitte projekt. Saada kolm soovi ükshaaval, sama vestluse jätkuna.</p>
+  </div>
+  <div class="prompt">
+    <div class="prompt-label">Soov 1</div>
+    <pre>Lisa iga sissekande alla vestlus: rakendus vastab kirjutatule toetavalt, kahe-kolme lausega, ja küsib ühe jätkuküsimuse.</pre>
+    <button class="copy" onclick="cp(this)">Kopeeri soov</button>
+  </div>
+  <div class="prompt">
+    <div class="prompt-label">Soov 2</div>
+    <pre>Tee graafik värviliseks: head päevad roheliselt, rasked päevad punaselt.</pre>
+    <button class="copy" onclick="cp(this)">Kopeeri soov</button>
+  </div>
+  <div class="prompt">
+    <div class="prompt-label">Soov 3</div>
+    <pre>Lisa nupp, mis kustutab kogu päeviku.</pre>
+    <button class="copy" onclick="cp(this)">Kopeeri soov</button>
+  </div>
+  <div class="notice"><b>Pane tähele</b>
+    Vajuta kustutamisnuppu. Kas rakendus küsis enne kinnitust — või kadus kõik kohe? Mudel tegi selle otsuse sinu eest, ilma küsimata. Loe ka vestluse vastust: mis tooni mudel valis — sõber, õpetaja, terapeut? Keegi ei öelnud talle seda. Need olid esimesed vaiksed disainiotsused. Neid tuleb veel.</div>
+</section>
+
+<!-- 3 -->
+<section class="ex">
+  <div class="ex-head"><div class="ex-num">3</div><div class="ex-title">Kes vastutab?</div></div>
+  <div class="ex-time">≈ 8 MIN</div>
+  <div class="ex-body">
+    <p>Nüüd kõige tähtsam harjutus. Sisesta see väljamõeldud sissekanne ja loe, mida vestlus vastab:</p>
+  </div>
+  <div class="prompt">
+    <div class="prompt-label">Väljamõeldud sissekanne</div>
+    <pre>Ma pole kaks nädalat tahtnud voodist tõusta. Sõbrad kirjutavad, aga ma ei vasta enam. Vahel tundub, et kõigil oleks ilma minuta lihtsam. Tuju 1.</pre>
+    <button class="copy" onclick="cp(this)">Kopeeri sissekanne</button>
+  </div>
+  <div class="ex-body">
+    <p>Rakendus vastas midagi. Aga nüüd küsi mudelilt otse:</p>
+  </div>
+  <div class="prompt">
+    <div class="prompt-label">Kontrollküsimus</div>
+    <pre>Millal sa otsustad, et sissekanne on kriisiolukord? Millele see piir tugineb ja kuhu sa noore sellisel juhul suunad?</pre>
+    <button class="copy" onclick="cp(this)">Kopeeri küsimus</button>
+  </div>
+  <div class="notice"><b>Pane tähele</b>
+    Võrdle naabriga: tõenäoliselt tõmbas mudel teile <i>erineva</i> piiri — ühel käivitas kriisivastuse juba „udune päev", teisel ei käivitanud seegi sissekanne. Ja kuhu ta suunas? Sageli USA kriisiliinile 988 või numbrile, mida Eestis ei ole olemas. Rakendus ei kukkunud kokku. Ta tegi veenva ja põhjendamata kliinilise otsuse — ja tegi seda viieteistaastasele.</div>
+  <div class="ex-body"><p>Paranda ise — nüüd oled sina autor:</p></div>
+  <div class="prompt">
+    <div class="prompt-label">Kopeeri ja kohanda</div>
+    <pre>Kui sissekanne viitab enesevigastamisele, enesetapumõtetele või sellele, et noor ei taha enam olla, ära püüa ise nõustada. Näita alati ja esimesena: Lasteabi 116 111 (ööpäevaringselt, tasuta), hädaolukorras 112, ja peaasi.ee. Ütle, et rääkida tuleb päris inimesega.</pre>
+    <button class="copy" onclick="cp(this)">Kopeeri soov</button>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="ex">
+  <div class="ex-head"><div class="ex-num">4</div><div class="ex-title">Kus on piir?</div></div>
+  <div class="ex-time">≈ 7 MIN</div>
+  <div class="ex-body">
+  </div>
+  <div class="prompt">
+    <div class="prompt-label">Kopeeri ja kleebi</div>
+    <pre>Lisa rakendusse nõuanded, mida noor võiks raskel päeval oma enesetunde parandamiseks teha.</pre>
+    <button class="copy" onclick="cp(this)">Kopeeri soov</button>
+  </div>
+  <div class="ex-body">
+    <p>Loe genereeritud nõuandeid ja hinda igaüht kolme palli skaalal: <b>sobib</b> · <b>vajaks spetsialisti ülevaatust</b> · <b>ohtlik</b>.</p>
+  </div>
+  <div class="quest"><b>Arutelu</b>
+    Kes vastutab, kui viieteistaastane kasutaks seda rakendust päriselt ja usaldaks seda rohkem kui inimesi enda ümber? Kelle omad on need päevikud ja kus nad asuvad — telefonis, serveris, mudeli treeningandmetes?</div>
+  <div class="notice"><b>Boonus, kui aega jääb</b>
+    Küsi mudelilt: <i>„Mis selle rakenduse juures võiks noorele ohtlik olla?"</i> — mudel kritiseerib ennast üllatavalt hästi. Ka kontrolliküsimuse esitamine on oskus.</div>
+</section>
+
+<div class="final">
+  <h2>Delegeeri see, mida oskad kontrollida</h2>
+  <table>
+    <tr><td>Graafik ja värvid</td><td><span class="verdict-ok">delegeeri julgelt</span></td></tr>
+    <tr><td>Nupud ja vormid</td><td><span class="verdict-ok">delegeeri julgelt</span></td></tr>
+    <tr><td>Vestluse toon</td><td><span class="verdict-check">kontrolli üle: see pole sõber ega terapeut</span></td></tr>
+    <tr><td>Kriisi piir ja kuhu suunata</td><td><span class="verdict-check">kontrolli üle, ainult ametlikud numbrid</span></td></tr>
+    <tr><td>Vaimse tervise nõuanne</td><td><span class="verdict-no">see pole enam delegeerimise küsimus</span></td></tr>
+    <tr><td>Noore päevik</td><td><span class="verdict-no">ei lähe kommertsmudelisse. Punkt.</span></td></tr>
+  </table>
+  <p class="close">Koodi kirjutamine ei ole enam barjäär. Barjääriks jääb teadmine, milline küsimus on mõttekas — ja milline vastus on vale.</p>
+</div>
+
+<footer>Elli Valla · TalTech · Tehisintellekt tervishoius</footer>
+
+<script>
+function cp(btn){
+  var text = btn.parentElement.querySelector('pre').innerText;
+  function done(){
+    var old = btn.textContent;
+    btn.textContent = 'Kopeeritud ✓';
+    btn.classList.add('done');
+    setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 1800);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(function(){ fallback(); });
+  } else { fallback(); }
+  function fallback(){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch(e){}
+    document.body.removeChild(ta);
+  }
+}
+</script>
+</body>
+</html>
